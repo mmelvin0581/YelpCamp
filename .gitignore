@@ -131,6 +131,7 @@ modules.xml
 .idea/misc.xml
 *.ipr
 .idea/vcs.xml
+.idea
 
 ### macOS ###
 *.DS_Store
