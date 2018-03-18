@@ -10,7 +10,8 @@ app.set("view engine", "ejs");
 // SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 var Campground = mongoose.model("Campground", campgroundSchema);
@@ -19,7 +20,8 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 //     {
 //       name: "Granite Hill",
 //       image:
-//           "https://pixabay.com/get/eb3db30a29fd063ed1584d05fb1d4e97e07ee3d21cac104497f1c27ba5eab7bd_340.jpg"
+//           "https://pixabay.com/get/ea34b4082bfd1c22d2524518b7444795ea76e5d004b0144394f3c57ca3eab4_340.jpg",
+//       description: "This is a HUGE granite hill. No bathrooms. Beautiful granite!"
 //     }, function (err, campground) {
 //       if (err) {
 //         console.log(err);
@@ -38,7 +40,7 @@ app.get("/", function (req, res) {
 });
 
 /**
- * Campgrounds-GET route
+ * INDEX ROUTE - show all campgrounds
  */
 app.get("/campgrounds", function (req, res) {
   // Get all campgrounds from DB
@@ -46,19 +48,20 @@ app.get("/campgrounds", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("campgrounds", {campgrounds: allCampgrounds});
+      res.render("index", {campgrounds: allCampgrounds});
     }
   });
 });
 
 /**
- * Campgrounds-POST route: handles the form from /campgrounds/new
+ * CREATE - add new campground to database
  */
 app.post("/campgrounds", function (req, res) {
   // get data from form and add to campgrounds array
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = {name: name, image: image};
+  var desc = req.body.description;
+  var newCampground = {name: name, image: image, description: desc};
   // create a new campground and save to DB
   Campground.create(newCampground, function (err, newlyCreated) {
     if(err) {
@@ -71,10 +74,25 @@ app.post("/campgrounds", function (req, res) {
 });
 
 /**
- * Add new Campground route: submits a post request to Campgrounds-POST, which redirects to Campgrounds-GET
+ * NEW - show form to create new campground
  */
 app.get("/campgrounds/new", function (req, res) {
   res.render("new");
+});
+
+/**
+ * SHOW - shows more information for one campground
+ */
+app.get("/campgrounds/:id", function(req, res) {
+  // find the campground with the provided id
+  Campground.findById(req.params.id, function (err, foundCampground) {
+    if (err) {
+      console.log(err);
+    } else {
+      // render show template with that campground
+      res.render("show", {campground: foundCampground});
+    }
+  });
 });
 
 app.listen(3000, function () {
