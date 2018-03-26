@@ -1,5 +1,8 @@
 #YelpCamp
 
+This readme serves as a development flow for how 
+YelpCamp was created.
+
 ##Initial Setup
 * Add Landing Page
 * Add Campgrounds Page that lists all campgrounds
@@ -131,9 +134,10 @@ Comment Destroy Route:    /campgrounds/:id/comments/:comment_id
 * Hide/Show edit and delete buttons
 * Refactor Middleware
 
-
-
-
+#Adding in Flash!
+* Demo working version
+* Install and configure connect-flash
+* Add bootstrap alerts to header
 
 
 * BOOTSTRAP NAV COLLPASE JS
@@ -147,7 +151,7 @@ Comment Destroy Route:    /campgrounds/:id/comments/:comment_id
 * UPDATE/DELETE CAMPGROUND
 
 
-RESTFUL ROUTES
+#RESTFUL ROUTES
 
 name      url      verb    desc.
 ===============================================
